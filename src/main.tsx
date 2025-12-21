@@ -17,13 +17,24 @@ const colors = {
 
 const theme = extendTheme({ colors })
 
+const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
+
+if (!googleClientId) {
+  console.warn('VITE_GOOGLE_CLIENT_ID is not set. Google OAuth features will not work.')
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    {googleClientId ? (
+      <GoogleOAuthProvider clientId={googleClientId}>
+        <ChakraProvider theme={theme}>
+          <App />
+        </ChakraProvider>
+      </GoogleOAuthProvider>
+    ) : (
       <ChakraProvider theme={theme}>
         <App />
       </ChakraProvider>
-    </GoogleOAuthProvider>
+    )}
   </StrictMode>,
 ) 
