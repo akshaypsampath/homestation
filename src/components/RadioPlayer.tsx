@@ -11,7 +11,7 @@ import { FaPlay, FaPause, FaVolumeUp, FaForward, FaBackward } from 'react-icons/
  * 
  */
 
-export default function RadioPlayer( {isPortrait}: {isPortrait: boolean} ) {
+export default function RadioPlayer( {isPortrait: _isPortrait}: {isPortrait: boolean} ) {
   const stations = [
     { name: 'WBGO', url: 'https://ais-sa8.cdnstream1.com/3629_128.mp3' },
     { name: 'Jazz24', url: 'https://knkx-live-a.edge.audiocdn.com/6285_128k' },

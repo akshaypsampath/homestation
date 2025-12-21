@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import { findDocumentByName, getDocumentImagesByDay, isAuthenticated } from "../services/google-auth-service";
 
-export default function OpenMicsToday({ isPortrait }: { isPortrait: boolean }) {
+export default function OpenMicsToday({ isPortrait: _isPortrait }: { isPortrait: boolean }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
