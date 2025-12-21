@@ -14,5 +14,5 @@ export default defineConfig({
     global: 'globalThis',
   },
   root: '.',
-  base: '/akshaypsampath/',
+  base: '/homestation/',
 })
