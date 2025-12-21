@@ -23,18 +23,14 @@ if (!googleClientId) {
   console.warn('VITE_GOOGLE_CLIENT_ID is not set. Google OAuth features will not work.')
 }
 
+// Always wrap in GoogleOAuthProvider to prevent errors when components use OAuth hooks
+// Use a placeholder client ID if none is provided (will show error but won't crash)
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {googleClientId ? (
-      <GoogleOAuthProvider clientId={googleClientId}>
-        <ChakraProvider theme={theme}>
-          <App />
-        </ChakraProvider>
-      </GoogleOAuthProvider>
-    ) : (
+    <GoogleOAuthProvider clientId={googleClientId || 'placeholder-client-id'}>
       <ChakraProvider theme={theme}>
         <App />
       </ChakraProvider>
-    )}
+    </GoogleOAuthProvider>
   </StrictMode>,
 ) 

@@ -5,6 +5,7 @@ import { FaSignOutAlt, FaSignInAlt } from 'react-icons/fa'
 
 export default function LoginButton({ showLogout = true }: { showLogout?: boolean }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
 
   useEffect(() => {
     // Check if we already have a valid access token
@@ -51,6 +52,11 @@ export default function LoginButton({ showLogout = true }: { showLogout?: boolea
   }
   
   if (isAuthenticated && !showLogout) {
+    return null
+  }
+
+  // Don't show login button if client ID is not configured
+  if (!googleClientId || googleClientId === 'placeholder-client-id') {
     return null
   }
 
