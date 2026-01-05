@@ -15,4 +15,7 @@ export default defineConfig({
   },
   root: '.',
   base: '/homestation/',
+  build: {
+    target: 'es2017', // Target ES2017 - transpiles ES2020+ features like optional chaining for older browsers (Raspberry Pi 4)
+  },
 })
