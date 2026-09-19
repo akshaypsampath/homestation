@@ -12,6 +12,39 @@ function getAccessToken(): string | null {
 }
 
 /**
+ * Store a token along with the time (ms since epoch) it expires
+ */
+export function saveToken(accessToken: string, expiresInSeconds: number) {
+  localStorage.setItem('googleAccessToken', accessToken)
+  localStorage.setItem('googleTokenExpiry', String(Date.now() + expiresInSeconds * 1000))
+}
+
+export function clearToken() {
+  localStorage.removeItem('googleAccessToken')
+  localStorage.removeItem('googleTokenExpiry')
+}
+
+/**
+ * Expiry time in ms since epoch. Tokens saved before expiry tracking existed count as expired.
+ */
+export function getTokenExpiry(): number {
+  return Number(localStorage.getItem('googleTokenExpiry')) || 0
+}
+
+export function hasStoredToken(): boolean {
+  return getAccessToken() !== null
+}
+
+/**
+ * Mark the stored token as expired (e.g. after a 401) without forgetting it,
+ * so the silent refresh in LoginButton still knows there was a session to renew.
+ */
+function markTokenExpired() {
+  localStorage.setItem('googleTokenExpiry', '0')
+  window.dispatchEvent(new Event('googleAuthChange'))
+}
+
+/**
  * Make an authenticated request to Google APIs
  */
 async function authenticatedFetch(endpoint: string, options: RequestInit = {}) {
@@ -29,6 +62,10 @@ async function authenticatedFetch(endpoint: string, options: RequestInit = {}) {
         'Content-Type': 'application/json',
       },
     })
+
+    if (response.status === 401) {
+      markTokenExpired()
+    }
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({ error: response.statusText }))
@@ -152,12 +189,16 @@ export async function getDocumentContent(documentId: string) {
     }
 
     const exportUrl = `${API_BASE_URL}/drive/v3/files/${documentId}/export?mimeType=text/plain`
-    
+
     const response = await fetch(exportUrl, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
+
+    if (response.status === 401) {
+      markTokenExpired()
+    }
 
     if (!response.ok) {
       await response.text().catch(() => response.statusText)
@@ -193,12 +234,16 @@ export async function getDocumentImagesByDay(documentId: string): Promise<Record
 
     // Export as HTML to get image URLs
     const exportUrl = `${API_BASE_URL}/drive/v3/files/${documentId}/export?mimeType=text/html`
-    
+
     const response = await fetch(exportUrl, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
+
+    if (response.status === 401) {
+      markTokenExpired()
+    }
 
     if (!response.ok) {
       await response.text().catch(() => response.statusText)
@@ -324,8 +369,8 @@ export async function getDocumentImagesByDay(documentId: string): Promise<Record
 }
 
 /**
- * Check if user is authenticated
+ * Check if there is a token that hasn't expired yet
  */
 export function isAuthenticated(): boolean {
-  return getAccessToken() !== null
+  return getAccessToken() !== null && getTokenExpiry() > Date.now()
 }
