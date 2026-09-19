@@ -62,8 +62,8 @@ export default function RadioPlayer( {isPortrait: _isPortrait}: {isPortrait: boo
 
   return (
     <Center w="100%" h="100%">
-      <VStack spacing={4} alignItems="center">
-        <Text fontSize="1.6em">{stations[stationIndex].name}</Text>
+      <VStack spacing={2} alignItems="center">
+        <Text fontSize="1.2em">{stations[stationIndex].name}</Text>
         <audio
           ref={audioRef}
           src={stations[stationIndex].url}
@@ -72,19 +72,19 @@ export default function RadioPlayer( {isPortrait: _isPortrait}: {isPortrait: boo
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
         />
-        <HStack spacing={2}>
-          <Button onClick={skipBackward} size="sm">
+        <HStack spacing={1}>
+          <Button onClick={skipBackward} size="xs">
             <Icon as={FaBackward} />
           </Button>
-          <Button onClick={togglePlay} size="sm">
+          <Button onClick={togglePlay} size="xs">
             <Icon as={isPlaying ? FaPause : FaPlay} />
           </Button>
-          <Button onClick={skipForward} size="sm">
+          <Button onClick={skipForward} size="xs">
             <Icon as={FaForward} />
           </Button>
         </HStack>
         <HStack>
-          <Icon as={FaVolumeUp} />
+          <Icon as={FaVolumeUp} boxSize="0.9em" />
           <Slider
             aria-label="volume"
             value={volume}
@@ -92,7 +92,7 @@ export default function RadioPlayer( {isPortrait: _isPortrait}: {isPortrait: boo
             min={0}
             max={1}
             step={0.1}
-            w="6em"
+            w="4.5em"
           >
             <SliderTrack>
               <SliderFilledTrack />

@@ -51,8 +51,8 @@ function App() {
           <Heading color="red">{currentTime.toLocaleString(DateTime.TIME_SIMPLE)}</Heading>
         </Flex>
         <Flex w="100%" justifyContent="space-around" alignItems="center" p={4} gap={4}>
-          <Box  w="12vw" h="20vh" borderRadius={30} bgGradient="linear(to-t, blue.100, gray.400)"><RadioPlayer isPortrait={false}/></Box>  
-          <Center w="87vw" h="20vh" borderRadius={30} overflow="hidden" bg="white.100"><Weather isPortrait={false}/></Center>
+          <Box  w="12vw" h="24vh" borderRadius={30} bgGradient="linear(to-t, blue.100, gray.400)"><RadioPlayer isPortrait={false}/></Box>
+          <Center w="87vw" h="24vh"borderRadius={30} overflow="hidden" bg="white.100"><Weather isPortrait={false}/></Center>
         </Flex>
         <Flex w="100%" mt={2} gap={4}>
           <Box  w="40%" h="60vh" borderRadius={30} overflow="hidden" bgGradient="linear(to-t, blue.200, pink.200)"><Calendar isPortrait={false}/></Box>

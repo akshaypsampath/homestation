@@ -39,10 +39,9 @@ jobs:
         run: npm ci
       - name: Verify secret is set
         run: |
-          if [ -z "${{ secrets.VITE_GOOGLE_CLIENT_ID }}" ]; then
-            echo "⚠️ WARNING: VITE_GOOGLE_CLIENT_ID secret is not set!"
-            echo "Please add it as an environment secret for 'github-pages' environment"
-            echo "OR as a repository secret"
+          if [ -z "$VITE_GOOGLE_CLIENT_ID" ]; then
+            echo "::error::VITE_GOOGLE_CLIENT_ID secret is not set. Add it as a repository secret or a 'github-pages' environment secret."
+            exit 1
           else
             echo "✅ VITE_GOOGLE_CLIENT_ID secret is set (length: ${#VITE_GOOGLE_CLIENT_ID})"
           fi
