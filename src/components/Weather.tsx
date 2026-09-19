@@ -147,21 +147,21 @@ export default function Weather( {isPortrait}: {isPortrait: boolean} ) {
       ) : (
         <Card w="12%" key={item.number} h="100%" borderRadius={"4vh"} alignItems="center" justifyContent="center" bgGradient={item.isDaytime ? "linear(to-t, blue.50, blue.500)" : "linear(to-t, gray.100, gray.600)"}>
           <CardBody paddingTop={"2vh"} paddingBottom={"1vh"} h="100%" display="flex" flexDirection="column" justifyContent="space-between">
-            <Heading fontSize="1.5em" color="white" w="100%" >{DateTime.fromISO(item.startTime).toLocaleString(DateTime.TIME_SIMPLE)}</Heading>
+            <Heading fontSize="1.2em" color="white" w="100%" >{DateTime.fromISO(item.startTime).toLocaleString(DateTime.TIME_SIMPLE)}</Heading>
             <Flex>
               {SHOW_ICONS && <Image src={item.icon} alt={item.name} width="5em" height="3em" p={0} alignSelf="center" justifySelf="center"/>}
               {SHOW_ICONS && <Spacer width="2vh" />}
               <VStack width="100%" spacing={0}>
-                <Text fontSize="3vh" >{((item.temperature.value)*1.8+32).toFixed(0)}°{item.temperature.unit}</Text>
+                <Text fontSize="3.6vh" >{((item.temperature.value)*1.8+32).toFixed(0)}°{item.temperature.unit}</Text>
                 <HStack alignItems="baseline" justifyContent="space-around" gap={0}>
-                  <Text fontSize="2.5vh" >{item.probabilityOfPrecipitation.value}</Text>
-                  <Text fontSize="1.1vh" >%</Text>
-                  <Text fontSize="2.5vh" >☔️</Text>
+                  <Text fontSize="3vh" >{item.probabilityOfPrecipitation.value}</Text>
+                  <Text fontSize="1.4vh" >%</Text>
+                  <Text fontSize="3vh" >☔️</Text>
                 </HStack>
               </VStack>
             </Flex>
-            <Text fontSize="1.7vh">{item.shortForecast}</Text>
-            <Text fontSize="1.5vh">{((item.windSpeed.value)*0.621371).toFixed(0)} mph</Text>
+            <Text fontSize="2vh">{item.shortForecast}</Text>
+            <Text fontSize="1.8vh">{((item.windSpeed.value)*0.621371).toFixed(0)} mph</Text>
           </CardBody>
         </Card>
       )
